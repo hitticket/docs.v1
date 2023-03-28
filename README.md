@@ -24,7 +24,14 @@ Authorization:Bearer {token\_value}
 
 Sample Request:
 
-POST JSON TYPE: { "tenancyName": "default", "usernameOrEmailAddress": "**", "password": "**" }
+POST JSON TYPE: 
+```
+{
+    "tenancyName": "default",
+    "usernameOrEmailAddress": "**",
+    "password": "**"
+}
+```
 
 ## 2. Flight Search
 
@@ -50,11 +57,35 @@ POST JSON TYPE :
 
 One way
 
-```{ "origin": "AYT", "destination": "MOW", "departureDate": "2016-12-12", "arrivalDate": "", "adultCount": 1, "childCount": 0, "infantCount": 0, "currencyId": "TRY", "refId": 0}```
+```
+{
+    "origin": "AYT",
+    "destination": "MOW",
+    "departureDate": "2016-12-12",
+    "arrivalDate": "",
+    "adultCount": 1,
+    "childCount": 0,
+    "infantCount": 0,
+    "currencyId": "TRY",
+    "refId": 0
+}
+```
 
 Round Trip
 
-```{ "origin": "AYT", "destination": "MOW", "departureDate": "2016-12-12", "arrivalDate": "2016-12-18", "adultCount": 1, "childCount": 0, "infantCount": 0, "currencyId": "TRY", "refId": 0}```
+```
+{
+    "origin": "AYT",
+    "destination": "MOW",
+    "departureDate": "2016-12-12",
+    "arrivalDate": "2016-12-18",
+    "adultCount": 1,
+    "childCount": 0,
+    "infantCount": 0,
+    "currencyId": "TRY",
+    "refId": 0
+}
+```
 
 ## 3.Active Destination List
 
@@ -74,7 +105,14 @@ Parameters
 
 Sample Request:
 
-POST JSON TYPE : ```{"searchId":"**","flightId":"**","returnFlightId":"e1f732c4-40f2-fe21-8597-39e63da0633f"}```
+POST JSON TYPE : 
+```
+{
+    "searchId": "**",
+    "flightId": "**",
+    "returnFlightId": "e1f732c4-40f2-fe21-8597-39e63da0633f"
+}
+```
 
 ## 5. Booking
 
