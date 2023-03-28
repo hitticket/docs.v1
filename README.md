@@ -1,4 +1,3 @@
-# Hit-Ticket Web Api
 
 Link: https://api
 
