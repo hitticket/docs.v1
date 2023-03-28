@@ -90,6 +90,49 @@ Round Trip
 
 Link: https://api/services/app/flight/GetRoutes (Type : GET)
 
+Example Response
+```
+{
+    "routes": [
+        {
+            "id": 0,
+            "orig": "ADB",
+            "dest": "DME",
+            "dates": [
+                "12.10.2025"
+            ]
+        },
+        {
+            "id": 0,
+            "orig": "DME",
+            "dest": "ADB",
+            "dates": [
+                "05.10.2025"
+            ]
+        },
+        {
+            "id": 0,
+            "orig": "AER",
+            "dest": "AYT",
+            "dates": [
+                "01.04.2023"
+            ]
+        },
+        {
+            "id": 0,
+            "orig": "AYT",
+            "dest": "AER",
+            "dates": [
+                "29.03.2023",
+                "31.03.2023",
+                "01.04.2023",
+                "04.04.2023",
+                "05.04.2023"
+            ]
+        }
+    ]
+}
+```
 ## 4. Basket
 
 Link: https://api/services/app/booking/AddBasketAsync (Type : POST)
