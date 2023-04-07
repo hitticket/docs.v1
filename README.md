@@ -186,14 +186,19 @@ Passenger Parameters
 | passportNumber | string |
 | passportSerial | string |
 | passportExpireDate | string |
+| nationality | string |
 
-PassengerType
+Passenger Parameters
 
-Adult = 1, Child = 2, Infant = 3
+    PassengerType
+        Adult = 1, Child = 2, Infant = 3
 
-Gender
-
-Male = 0,Female = 1
+    Gender
+        Male = 0,Female = 1
+        
+    Nationality    
+        Passenger information for Nationality should only include the short country code. For example: for Russia, it should be ("RU") and so on
+    
 
 Customer Parameters
 
@@ -247,7 +252,8 @@ POST JSON TYPE :
         "passengerType": 1,
         "passportNumber": "123456789",
         "passportSerial": "DF",
-        "passportExpireDate": "2020-01-01"
+        "passportExpireDate": "2020-01-01",
+        "nationality" : "RU"
       },
       {
         "name": "Best",
@@ -257,7 +263,8 @@ POST JSON TYPE :
         "passengerType": 1,
         "passportNumber": "1564897",
         "passportSerial": "DF",
-        "passportExpireDate": "2020-01-01"
+        "passportExpireDate": "2020-01-01",
+        "nationality" : "RU"
       },
       {
         "name": "Nest",
@@ -267,7 +274,8 @@ POST JSON TYPE :
         "passengerType": 2,
         "passportNumber": "695845",
         "passportSerial": "DF",
-        "passportExpireDate": "2020-01-01"
+        "passportExpireDate": "2020-01-01",
+        "nationality" : "RU"
       },
       {
         "name": "Rest",
@@ -277,7 +285,8 @@ POST JSON TYPE :
         "passengerType": 3,
         "passportNumber": "74584565",
         "passportSerial": "DF",
-        "passportExpireDate": "2020-01-01"
+        "passportExpireDate": "2020-01-01",
+        "nationality" : "RU"
       }
     ],
     "customer": {
