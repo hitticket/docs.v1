@@ -1,4 +1,3 @@
-# ✈️ Hit Turizm API Documentation
 
 The Hit Turizm API allows authorized partners to perform operations such as user login, flight search, basket creation, and booking management.
 
