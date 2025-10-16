@@ -50,7 +50,7 @@ Bearer {token_value}
 
 **Endpoint:**  
 ```
-POST https://api.hit-turizm.com/provider/flight/search
+POST https://provider/flight/search
 ```
 
 **Description:**  
