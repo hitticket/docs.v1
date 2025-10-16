@@ -1,4 +1,3 @@
-
 The Hit Turizm API allows authorized partners to perform operations such as user login, flight search, basket creation, and booking management.
 
 All API requests use **JSON** format and must include the correct headers.  
@@ -41,6 +40,18 @@ Bearer {token_value}
   "tenancyName": "default",
   "usernameOrEmailAddress": "user@example.com",
   "password": "********"
+}
+```
+
+**Sample Response:**
+```json
+{
+  "result": {
+    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
+    "expireInSeconds": 3600,
+    "userId": 1234
+  },
+  "success": true
 }
 ```
 
@@ -135,11 +146,32 @@ Accept: application/json
 }
 ```
 
-### **Notes**
-- `refId` is **mandatory** for all requests.  
-- Leave `arrivalDate` empty for **one-way** flights.  
-- `currencyId` must follow **ISO 4217** (e.g., `USD`, `EUR`, `TRY`).  
-- `_request` field in the response reflects normalized request data.
+### **Response Details (Expanded)**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **fsid** | `string` | Unique identifier for the search request (used for tracking or re-fetching results). |
+| **_request** | `object` | Echo of the normalized request parameters processed by the API. |
+| **_request.departureDate / arrivalDate** | `string` | Departure and return dates (ISO 8601). |
+| **_request.fromAirportId / toAirportId** | `string` | IATA codes for departure and arrival airports. |
+| **_request.currencyId** | `string` | ISO 4217 currency code used in the request. |
+| **_request.adultCount / childCount / infantCount** | `integer` | Passenger distribution per category. |
+| **flights** | `object` | Collection of flight segments grouped by index (`"0"`, `"1"`, etc.). Each contains an array of available flight options. |
+| **flights[n].id** | `string` | Unique flight ID for booking or basket usage. |
+| **flights[n].origin / destination** | `string` | Full name of the airports including country and IATA code. |
+| **flights[n].departureDate / arrivalDate** | `string` | Departure and arrival times (ISO 8601). |
+| **flights[n].airlineName** | `string` | Airline name. |
+| **flights[n].flightNo** | `string` | Flight number (e.g. `ZF 1051`). |
+| **flights[n].iataCode / icaoCode** | `string` | Airline codes per IATA/ICAO. |
+| **flights[n].route** | `string` | Flight route code (e.g. `VKO-AYT`). |
+| **flights[n].price** | `decimal` | Flight price per passenger in the given currency. |
+| **flights[n].currencyId** | `string` | Currency used for the price. |
+| **flights[n].baggageWeight / baggageInfo** | `string` | Checked baggage weight and unit (e.g., `20`, `kg`). |
+| **flights[n].handBaggage** | `string` | Hand baggage allowance (e.g., `8 kg`). |
+| **flights[n].isCharter** | `boolean` | `true` if the flight is charter, otherwise `false`. |
+| **errorMessage** | `string/null` | Null when successful; contains error info when failed. |
+| **market** | `string/null` | Reserved field for market or distribution info (optional). |
+| **isSuccess** | `boolean` | Indicates success status of the request. |
 
 ---
 
@@ -190,6 +222,17 @@ POST https://api/services/app/booking/AddBasketAsync
 }
 ```
 
+**Sample Response:**
+```json
+{
+  "result": {
+    "basketId": "fe2c9b90-1290-441e-823d-391d0e8a8b19",
+    "createdAt": "2025-10-16T12:30:00Z"
+  },
+  "success": true
+}
+```
+
 ---
 
 ## 5. 🧾 Booking
@@ -213,77 +256,6 @@ POST https://api/services/app/booking/CreateFlightBooking
 | passengers | array | Passenger details |
 | customer | object | Customer contact info |
 | payment | object | Payment details |
-
-### Passenger Parameters
-
-| Field | Type |
-| --- | --- |
-| name | string |
-| surname | string |
-| gender | int |
-| birthday | string |
-| passengerType | int |
-| passportNumber | string |
-| passportSerial | string |
-| passportExpireDate | string |
-| nationality | string |
-
-**PassengerType**
-```
-Adult = 1, Child = 2, Infant = 3
-```
-
-**Gender**
-```
-Male = 0, Female = 1
-```
-
-**Nationality**
-```
-Use short country code (e.g., "RU")
-```
-
----
-
-### Customer Parameters
-
-| Field | Type |
-| --- | --- |
-| name | string |
-| surname | string |
-| gsm | string |
-| email | string |
-| title | string |
-
----
-
-### Payment Parameters
-
-| Field | Type |
-| --- | --- |
-| paymentType | int |
-| creditCard | json |
-
-**PaymentType**
-```
-CreditCard = 0, Account = 1
-```
-
-**CreditCard Parameters**
-
-| Field | Type |
-| --- | --- |
-| cardOwner | string |
-| cardNumber | string |
-| cardType | int |
-| expiryMonth | int |
-| expiryYear | int |
-| cvc | string |
-
-**CardType**
-```
-Master = 0, Visa = 1, Amex = 2
-```
 
 **Sample Request:**
 ```json
@@ -325,6 +297,31 @@ Master = 0, Visa = 1, Amex = 2
 }
 ```
 
----
+**Sample Response:**
+```json
+{
+  "result": {
+    "orderNo": "EX61234",
+    "totalPrice": 20286.88,
+    "currencyId": "USD",
+    "customer": {
+      "name": "Test",
+      "surname": "Tester",
+      "email": "admin@flyantalya.com"
+    },
+    "flightOrders": [
+      {
+        "pnr": "54777",
+        "flightNo": "ZF 1051",
+        "origin": "MOW",
+        "destination": "AYT",
+        "departureDate": "2025-10-30T01:10:00",
+        "arrivalDate": "2025-10-30T05:35:00"
+      }
+    ]
+  },
+  "success": true
+}
+```
 
-© 2025 Hit Turizm API Documentation
+---
