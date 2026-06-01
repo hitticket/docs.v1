@@ -2,7 +2,7 @@
 
 This document describes the flight availability endpoints required for Skyscanner integration. It includes only the Flight Search and Active Destination List services.
 
-All requests and responses use JSON format. Endpoints that require authorization must include a Bearer Token in the request header.
+All requests and responses use JSON format.
 
 ---
 
@@ -23,7 +23,22 @@ Searches for available flights between an origin and a destination. The service 
 ```http
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer {token_value}
+```
+
+### Request JSON Model
+
+```json
+{
+  "origin": "string",
+  "destination": "string",
+  "departureDate": "string",
+  "arrivalDate": "string | null",
+  "adultCount": "integer",
+  "childCount": "integer",
+  "infantCount": "integer",
+  "currencyId": "string",
+  "refId": "integer"
+}
 ```
 
 ### Request Parameters
@@ -33,12 +48,68 @@ Authorization: Bearer {token_value}
 | origin | string | Yes | Origin airport or city IATA code. |
 | destination | string | Yes | Destination airport or city IATA code. |
 | departureDate | string | Yes | Departure date in `YYYY-MM-DD` format. |
-| arrivalDate | string | No | Return date in `YYYY-MM-DD` format. Leave empty for one-way searches. |
+| arrivalDate | string / null | No | Return date in `YYYY-MM-DD` format. Use `null` or an empty value for one-way searches. |
 | adultCount | integer | Yes | Number of adult passengers. |
 | childCount | integer | Yes | Number of child passengers. Use zero when there are no child passengers. |
 | infantCount | integer | Yes | Number of infant passengers. Use zero when there are no infant passengers. |
 | currencyId | string | Yes | Requested pricing currency. Supported values are `USD`, `EUR`, and `RUB`. |
-| refId | integer | Yes | Partner or agency reference identifier used for tracking and authorization context. |
+| refId | integer | Yes | Partner or agency reference identifier used for tracking context. |
+
+### Response JSON Model
+
+```json
+{
+  "result": {
+    "fsid": "string",
+    "_request": {
+      "departureDate": "string",
+      "arrivalDate": "string | null",
+      "fromAirportId": "string",
+      "toAirportId": "string",
+      "currencyId": "string",
+      "adultCount": "integer",
+      "childCount": "integer",
+      "infantCount": "integer"
+    },
+    "flights": {
+      "groupIndex": [
+        {
+          "id": "string",
+          "origin": "string",
+          "destination": "string",
+          "departureDate": "string",
+          "arrivalDate": "string",
+          "flightDuration": "string | null",
+          "departureHour": "string",
+          "arrivalHour": "string",
+          "flightHours": "string",
+          "airlineName": "string",
+          "flightNo": "string",
+          "iataCode": "string",
+          "icaoCode": "string",
+          "airCraftFullName": "string | null",
+          "price": "decimal",
+          "currencyId": "string",
+          "route": "string",
+          "basePath": "string",
+          "baggageWeight": "string",
+          "baggageInfo": "string",
+          "isCharter": "boolean",
+          "handBaggage": "string"
+        }
+      ]
+    },
+    "errorMessage": "string | null",
+    "market": "string | null",
+    "isSuccess": "boolean"
+  },
+  "targetUrl": "string | null",
+  "success": "boolean",
+  "error": "object | null",
+  "unAuthorizedRequest": "boolean",
+  "__abp": "boolean"
+}
+```
 
 ### Response Wrapper
 
@@ -117,12 +188,26 @@ Retrieves active origin and destination route pairs that are currently available
 
 ```http
 Accept: application/json
-Authorization: Bearer {token_value}
 ```
 
 ### Request Parameters
 
 This endpoint does not require a request body or query parameters.
+
+### Response JSON Model
+
+```json
+{
+  "routes": [
+    {
+      "id": "integer",
+      "orig": "string",
+      "dest": "string",
+      "dates": ["string"]
+    }
+  ]
+}
+```
 
 ### Response Structure
 
