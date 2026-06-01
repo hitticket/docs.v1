@@ -1,4 +1,3 @@
-# Hit Turizm API — Skyscanner Flight Integration
 
 This document describes the flight availability endpoints required for Skyscanner integration. It includes only the Flight Search and Active Destination List services.
 
